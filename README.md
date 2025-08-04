@@ -1,59 +1,121 @@
-# com.santi.sistema-libros-panache
+# 📚 Sistema de Gestión de Libros (Hibernate + Panache)
 
-This project uses Quarkus, the Supersonic Subatomic Java Framework.
+Proyecto simple desarrollado en Java utilizando **Quarkus** y **Hibernate ORM con Panache**, sobre una base de datos MySQL. Permite realizar operaciones básicas de gestión de libros: insertar, buscar, eliminar y listar. La persistencia se maneja mediante entidades Panache, simplificando el acceso a datos sin necesidad de DAOs explícitos.
 
-If you want to learn more about Quarkus, please visit its website: <https://quarkus.io/>.
+- 🎥 Video con la explicación del código:  
+https://www.youtube.com/watch?v=rZs01_rvTeI
 
-## Running the application in dev mode
+---
 
-You can run your application in dev mode that enables live coding using:
+## 🚀 Tecnologías
 
-```shell script
-./mvnw quarkus:dev
+- **Java 21**
+- **Quarkus**
+- **Hibernate ORM con Panache**
+- **MySQL**
+- **Maven**
+
+---
+
+## 📂 Estructura del Proyecto
+
+```
+sistema-libros-panache/
+├── src/
+│   └── main/
+│       ├── java/
+│       │   └── com/
+│       │       └── santi/
+│       │           └── sistemalibrospanache/
+│       │               ├── App.java
+│       │               └── entities/
+│       │                   └── Libro.java
+│       └── resources/
+│           └── application.properties
+└── pom.xml
 ```
 
-> **_NOTE:_**  Quarkus now ships with a Dev UI, which is available in dev mode only at <http://localhost:8080/q/dev/>.
+---
 
-## Packaging and running the application
+## 🧠 Funcionalidades
 
-The application can be packaged using:
+- Insertar libros
+- Buscar libro por ID
+- Buscar libros por título (usando `LIKE`)
+- Eliminar libros por ID
+- Listar todos los libros
+- Confirmar cada operación por consola
 
-```shell script
-./mvnw package
+---
+
+## 🛠️ Configuración de la base de datos
+
+1. Crear la base de datos en MySQL:
+
+```sql
+CREATE DATABASE tienda_libros;
+USE tienda_libros;
+
+CREATE TABLE libro (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    titulo VARCHAR(100) NOT NULL
+);
 ```
 
-It produces the `quarkus-run.jar` file in the `target/quarkus-app/` directory.
-Be aware that it’s not an _über-jar_ as the dependencies are copied into the `target/quarkus-app/lib/` directory.
+2. Editar `src/main/resources/application.properties`:
 
-The application is now runnable using `java -jar target/quarkus-app/quarkus-run.jar`.
+```properties
+quarkus.datasource.db-kind=mysql
+quarkus.datasource.username=root
+quarkus.datasource.password=
+quarkus.datasource.jdbc.url=jdbc:mysql://localhost:3306/tienda_libros
 
-If you want to build an _über-jar_, execute the following command:
+quarkus.hibernate-orm.schema-management.strategy=update
 
-```shell script
-./mvnw package -Dquarkus.package.jar.type=uber-jar
+quarkus.hibernate-orm.log.sql=false
+
+quarkus.console.enabled=false
 ```
 
-The application, packaged as an _über-jar_, is now runnable using `java -jar target/*-runner.jar`.
+---
 
-## Creating a native executable
+## ▶️ Ejecución
 
-You can create a native executable using:
+1. Iniciar en modo desarrollo (con consola activa):
 
-```shell script
-./mvnw package -Dnative
+```bash
+quarkus dev
 ```
 
-Or, if you don't have GraalVM installed, you can run the native executable build in a container using:
+2. Resultado esperado (resumen):
 
-```shell script
-./mvnw package -Dnative -Dquarkus.native.container-build=true
+```
+Libro 'Cien Años de Soledad' insertado con ID: 1
+Libro 'Rayuela' insertado con ID: 2
+
+Listado de libros:
+ - ID: 1, Título: Cien Años de Soledad
+ - ID: 2, Título: Rayuela
+
+Búsqueda por ID:
+ - ID: 1, Título: Cien Años de Soledad
+
+Búsqueda por título que contenga 'Soledad':
+ - ID: 1, Título: Cien Años de Soledad
+
+Libro 'Rayuela' eliminado: true
+
+Listado tras eliminación:
+ - ID: 1, Título: Cien Años de Soledad
+
+Libro 'Cien Años de Soledad' eliminado: true
+
+Listado final de libros:
+No hay libros en la base de datos.
 ```
 
-You can then execute your native executable with: `./target/com.santi.sistema-libros-panache-1.0.0-SNAPSHOT-runner`
+---
 
-If you want to learn more about building native executables, please consult <https://quarkus.io/guides/maven-tooling>.
+## 🧑‍💻 Autor
 
-## Related Guides
-
-- JDBC Driver - MySQL ([guide](https://quarkus.io/guides/datasource)): Connect to the MySQL database via JDBC
-- Hibernate ORM with Panache ([guide](https://quarkus.io/guides/hibernate-orm-panache)): Simplify your persistence code for Hibernate ORM via the active record or the repository pattern
+Santiago Civalero – Proyecto académico para práctica de Hibernate con Quarkus Panache y MySQL.
